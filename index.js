@@ -2,9 +2,9 @@ const connection = require('./config/connection');
 const inquirer = require('inquirer');
 const express = require('express')
 const fs = require('fs')
-const mysql = require('mysql2')
+
 const db = connection;
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3006;
 
 const app = express();
 
