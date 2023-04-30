@@ -95,3 +95,13 @@ const startQuestions = () => {
             };
         });
 };
+function viewDepartments() {
+    db.query('SELECT * FROM departments', function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(result);
+
+    })
+
+}
