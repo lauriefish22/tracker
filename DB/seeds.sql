@@ -24,7 +24,7 @@ VALUES
 (6, 'Donnie', 'Decibel' 6, 8),
 (7, 'Walker', 'Wheels' 7, 8),
 (8, 'Tommy', 'Tours' 8, NULL),
-(9, 'Sunny', 'Stager' 9, NULL);
+(9, 'Sunny', 'Stager' 9, NULL):
 
 
 
