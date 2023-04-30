@@ -1,36 +1,34 @@
-// const connection = require('./config/connection');
-// const inquirer = require('inquirer');
+const connection = require('./config/connection');
+const inquirer = require('inquirer');
 const express = require('express')
 const fs = require('fs')
 const mysql = require('mysql2')
-
+const db = connection;
 const PORT = process.env.PORT || 3001;
 
 const app = express();
 
 //establishing connection to db
-const db = mysql.createConnection(
-    {
-        host: 'localhost',
-        user: 'root',
-        password: 'password',
-        database: 'tracker_db'
-    },
-    console.log('Connected to tracker_db')
-);
+
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+connection.connect((error) => {
+    if (error)
+        throw error;
+    console.log('connected');
+    startQuestions();
+})
 
 const startQuestions = () => {
     inquirer.prompt([
         {
             type: 'list',
             name: 'choices',
-            message: 'Where would you like to do?',
-            choices: ['View departments',
+            message: 'What would you like to do?',
+            choices: ['View department',
 
-                'View departments',
+
                 'View employees',
                 'View employees by department',
                 'View roles',
@@ -51,7 +49,7 @@ const startQuestions = () => {
         .then(answers => {
             const { choices } = answers;
 
-            if (choices === 'View departments') {
+            if (choices === 'View department') {
                 viewDepartments();
             }
             if (choices === 'View employees') {
@@ -96,12 +94,13 @@ const startQuestions = () => {
         });
 };
 function viewDepartments() {
-    db.query('SELECT * FROM departments', function (err, result) {
-        if (err) {
-            console.log(err);
-        }
-        console.log(result);
+    db.query('SELECT * FROM department', function (err, result) {
+        console.table(result)
 
+
+
+        startQuestions();
     })
 
 }
+startQuestions();
