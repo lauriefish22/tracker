@@ -89,18 +89,169 @@ const startQuestions = () => {
                 seeBudget();
             }
             if (choices === 'I am finished') {
-                Connection.end()
+                connection.end()
             };
         });
 };
 function viewDepartments() {
     db.query('SELECT * FROM department', function (err, result) {
         console.table(result)
-
-
-
         startQuestions();
     })
 
 }
-startQuestions();
+function viewRoles() {
+    db.query('SELECT * FROM roles', function (err, result) {
+        console.table(result)
+        startQuestions();
+    })
+}
+function viewEmployees() {
+    db.query('SELECT * FROM employees', function (err, result) {
+        console.table(result)
+        startQuestions();
+    })
+}
+function addDepartment() {
+
+    inquirer.prompt([
+        {
+            name: 'newDept',
+            type: 'input',
+            message: 'Enter the name of the new department'
+        }
+    ]).then((answer) => {
+        let sql = `INSERT INTO department(title) VALUES( ? )`;
+        connection.query(sql, answer.newDept, (err, res) => {
+            if (err) throw err;
+            console.log(`${answer.newDept} entered`);
+            startQuestions();
+        });
+    });
+};
+let deptArray = [];
+function chooseDept() {
+    connection.query('SELECT * FROM roles', function (err, res) {
+        if (err) throw err
+        for (var i = 0; i < res.length; i++) {
+            deptArray.push(res[i].title);
+        }
+    })
+    return deptArray;
+}
+let roleArray = [];
+function chooseRole() {
+    connection.query('SELECT * FROM roles', function (err, res) {
+        if (err) throw err
+        for (var i = 0; i < res.length; i++) {
+            roleArray.push(res[i].title);
+        }
+    })
+    return roleArray;
+}
+let managerArray = [];
+function chooseManager() {
+    connection.query('SELECT first_name, last_name FROM employee WHERE manager_id IS NULL', function (err, res) {
+        if (err) throw err
+        for (var i = 0; i < res.length; i++) {
+            managerArray.push(res[i].first_name);
+        }
+    })
+    return managerArray;
+}
+
+function addRole() {
+
+    inquirer.prompt([
+        {
+            name: 'newRole',
+            type: 'input',
+            message: 'What is the title of the new role?'
+        },
+        {
+            name: 'roleDept',
+            type: 'input',
+            message: 'Which department does this role belong to?',
+            choices: chooseDept()
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'What is the Salary?'
+        }
+
+    ]).then((answers) => {
+        let deptId = chooseDept().indexOf(answers.department) + 1
+        connection.query('INSERT INTO role SET ?',
+            {
+                title: answers.newRole,
+                salary: answers.salary,
+                department_id: deptId,
+
+            }, function (err) {
+                if (err) throw err
+                console.table(answers);
+                startQuestions();
+            }
+        )
+
+        function addEmployee() {
+            inquirer.prompt([
+                {
+                    name: 'first_name',
+                    type: 'input',
+                    message: 'Enter the first name'
+                },
+                {
+                    name: 'last_name',
+                    type: 'input',
+                    message: 'Enter the last name'
+                },
+                {
+                    name: 'salary',
+                    type: 'number',
+                    message: 'Please enter the salary'
+                },
+                {
+                    name: 'role',
+                    type: 'input',
+                    message: 'Which role would you like to assign to this employee?',
+                    choices: chooseRole()
+                },
+                {
+                    name: 'manager',
+                    type: 'input',
+                    message: 'Which manager would you like to assign this employee to?',
+                    choices: chooseManager()
+                },
+                {
+                    name: 'department',
+                    type: 'input',
+                    message: 'Which department would you like to assign this employee to?',
+                    choices: chooseDept()
+                }
+
+            ]).then((answers) => {
+                let roleId = chooseRole().indexOf(answers.role) + 1
+                let manId = chooseManager().indexOf(answers.manager) + 1
+                connection.query('INSERT INTO employee SET ?',
+                    {
+                        first_name: answers.first_name,
+                        last_name: answers.last_name,
+                        manager_id: manId,
+                        role_id: roleId
+                    }, function (err) {
+                        if (err) throw err
+                        console.table(answers)
+                        startQuestions()
+                    })
+
+            })
+
+        }
+
+// let sql = `INSERT INTO department(title) VALUES( ? )`;
+//         connection.query(sql, answer.newDept, (err, res) => {
+//             if (err) throw err;
+//             console.log(`${answer.newDept} entered`);
+//             startQuestions();

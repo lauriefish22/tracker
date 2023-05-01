@@ -14,7 +14,7 @@ VALUES ('singer', 2000000.00, 1),
 ('tour manager', 1250000.00, 2),
 ('stage manager', 1250000.00, 1);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES ('Axl', 'Daisy', 1, 9),
 ('Slash', 'Kittens', 3, 9),
 ('Duff', 'Stuff', 4, 9),

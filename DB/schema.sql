@@ -20,7 +20,7 @@ FOREIGN KEY (department_id) REFERENCES department(id)
 
 
 
-CREATE TABLE employee (
+CREATE TABLE employees (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
