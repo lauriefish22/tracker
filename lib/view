@@ -1,0 +1,22 @@
+function viewDepartments() {
+    db.query('SELECT * FROM department', function (err, result) {
+        console.table(result)
+        startQuestions();
+    })
+
+}
+function viewRoles() {
+    db.query('SELECT * FROM roles', function (err, result) {
+        console.table(result)
+        startQuestions();
+    })
+}
+function viewEmployees() {
+    db.query('SELECT * FROM employees', function (err, result) {
+        console.table(result)
+        startQuestions();
+    })
+}
+
+
+module.exports = { viewRoles, viewEmployees, viewDepartments }

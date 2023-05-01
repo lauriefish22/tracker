@@ -1,0 +1,19 @@
+
+
+function deleteDepartment() { }
+function deleteEmployee() { }
+function deleteRole() { }
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = { deleteEmployee, deleteRole, deleteDepartment }
+

@@ -1,0 +1,109 @@
+const { viewRoles, viewEmployees, viewDepartments } = require('./lib/view');
+
+
+function addDepartment() {
+
+    inquirer.prompt([
+        {
+            name: 'newDept',
+            type: 'input',
+            message: 'Enter the name of the new department'
+        }
+    ]).then((answer) => {
+        let sql = 'INSERT INTO department(title) VALUES( ? )';
+        connection.query(sql, answer.newDept, (err, res) => {
+            if (err) throw err;
+            console.log(`${answer.newDept} entered`);
+            viewDepartments();
+        });
+    });
+};
+
+
+function addRole() {
+
+    inquirer.prompt([
+        {
+            name: 'newRole',
+            type: 'input',
+            message: 'What is the title of the new role?'
+        },
+        {
+            name: 'roleDept',
+            type: 'input',
+            message: 'Which department does this role belong to?',
+            choices: chooseDept()
+        },
+        {
+            name: 'newSalary',
+            type: 'input',
+            message: 'What is the Salary?'
+        }
+
+    ]).then((answers) => {
+
+        connection.query`(INSERT INTO roles(title, salary, department_id)
+        VALUES 
+        ('${answers.newRole}', '${answers.roleDept}', '${answers.newSalary}',`
+
+
+        startQuestions();
+    })
+}
+
+function addEmployee() {
+    inquirer.prompt([
+        {
+            name: 'first_name',
+            type: 'input',
+            message: 'Enter the first name'
+        },
+        {
+            name: 'last_name',
+            type: 'input',
+            message: 'Enter the last name'
+        },
+        {
+            name: 'salary',
+            type: 'number',
+            message: 'Please enter the salary'
+        },
+        {
+            name: 'role',
+            type: 'input',
+            message: 'Which role would you like to assign to this employee?',
+            choices: chooseRole()
+        },
+        {
+            name: 'manager',
+            type: 'input',
+            message: 'Which manager would you like to assign this employee to?',
+            choices: chooseManager()
+        },
+        {
+            name: 'department',
+            type: 'input',
+            message: 'Which department would you like to assign this employee to?',
+            choices: chooseDept()
+        }
+
+    ]).then((answers) => {
+        let roleId = chooseRole().indexOf(answers.role) + 1
+        let manId = chooseManager().indexOf(answers.manager) + 1
+        connection.query('INSERT INTO employees SET ?',
+            {
+                first_name: answers.first_name,
+                last_name: answers.last_name,
+                manager_id: manId,
+                role_id: roleId
+            }, function (err) {
+                if (err) throw err
+                console.table(answers)
+                startQuestions();
+            })
+
+    })
+
+}
+
+module.exports = { addRole, addEmployee, addDepartment }
