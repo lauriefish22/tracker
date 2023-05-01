@@ -1,29 +1,30 @@
-DROP DATABASE IF EXISTS tracker_db;
-CREATE DATABASE tracker_db;
+DROP DATABASE IF EXISTS tracker_DB;
+CREATE DATABASE tracker_DB;
 
-USE tracker_db;
+USE tracker_DB;
 
 CREATE TABLE department (
-id INT NOT NULL,
-name VARCHAR(50) NOT NULL,
-PRIMARY KEY (id)
+id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+title VARCHAR(50) NOT NULL,
+
 );
 
-CREATE TABLE role (
-id INT NOT NULL,
+CREATE TABLE roles (
+id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 title VARCHAR(50),
 salary DECIMAL,
 department_id INT,
-PRIMARY KEY (id),
+
 FOREIGN KEY (department_id) REFERENCES department(id)
 );
 
 CREATE TABLE employee (
-id INT NOT NULL,
+id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 first_name VARCHAR(50),
 last_name VARCHAR(50),
-role_id INT,
+roles_id INT,
 manager_id INT,
-PRIMARY KEY (id)
+FOREIGN KEY (roles_id) REFERENCES roles(id),
+FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
 

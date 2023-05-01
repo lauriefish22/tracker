@@ -1,10 +1,10 @@
 const connection = require('./config/connection');
 const inquirer = require('inquirer');
 const express = require('express')
-const fs = require('fs')
+// const fs = require('fs')
 
-const db = connection;
-const PORT = process.env.PORT || 3006;
+const DB = connection;
+// const PORT = process.env.PORT || 3006;
 
 const app = express();
 
@@ -94,7 +94,7 @@ const startQuestions = () => {
         });
 };
 function viewDepartments() {
-    db.query('SELECT * FROM department', function (err, result) {
+    DB.query('SELECT * FROM department', function (err, result) {
         console.table(result)
 
 
