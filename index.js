@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const express = require('express')
 // const fs = require('fs')
 
-const DB = connection;
+const db = connection;
 // const PORT = process.env.PORT || 3006;
 
 const app = express();
@@ -94,7 +94,7 @@ const startQuestions = () => {
         });
 };
 function viewDepartments() {
-    DB.query('SELECT * FROM department', function (err, result) {
+    db.query('SELECT * FROM department', function (err, result) {
         console.table(result)
 
 

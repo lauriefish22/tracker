@@ -1,5 +1,6 @@
-INSERT INTO department (title)
-VALUES ('Musicians'), 
+
+INSERT INTO department(title)
+VALUES ('Musicians'),
         ('Roadies');
 
 INSERT INTO roles (title, salary, department_id)
