@@ -1,20 +1,26 @@
+const connection = require('../config/connection');
+const db = connection;
+
+require('console.table');
+
+
 function viewDepartments() {
     db.query('SELECT * FROM department', function (err, result) {
-        console.table(result)
-        startQuestions();
+        console.table(result);
+        init();
     })
 
 }
 function viewRoles() {
     db.query('SELECT * FROM roles', function (err, result) {
-        console.table(result)
-        startQuestions();
+        consoleTable(result);
+        init();
     })
 }
 function viewEmployees() {
     db.query('SELECT * FROM employees', function (err, result) {
-        console.table(result)
-        startQuestions();
+        console.table(result);
+        init();
     })
 }
 

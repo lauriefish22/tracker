@@ -1,4 +1,6 @@
-const { viewRoles, viewEmployees, viewDepartments } = require('./lib/view');
+const { viewRoles, viewEmployees, viewDepartments } = require('./view');
+const connection = require('../config/connection');
+const db = connection;
 
 
 function addDepartment() {
