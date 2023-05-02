@@ -1,7 +1,7 @@
-const { viewRoles, viewEmployees, viewDepartments } = require('./view');
-const { addRole, addEmployee, addDepartment } = require('./add');
-const connection = require('../config/connection');
-const db = connection;
+// const { viewRoles, viewEmployees, viewDepartments } = require('./view');
+// const { addRole, addEmployee, addDepartment } = require('./add');
+// const connection = require('../config/connection');
+// const db = connection;
 
 
 function updateEmployee() {
@@ -87,8 +87,3 @@ function updateRole() {
     })
 }
 
-function updateDepartment() {
-
-}
-
-module.exports = { updateEmployee, updateDepartment, updateRole }

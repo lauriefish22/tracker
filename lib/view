@@ -1,28 +1,28 @@
-const connection = require('../config/connection');
-const db = connection;
+// const connection = require('../config/connection');
+// const db = connection;
 
-require('console.table');
+// require('console.table');
 
 
 function viewDepartments() {
     db.query('SELECT * FROM department', function (err, result) {
         console.table(result);
-        init();
+
     })
 
 }
 function viewRoles() {
     db.query('SELECT * FROM roles', function (err, result) {
         consoleTable(result);
-        init();
+
     })
 }
 function viewEmployees() {
     db.query('SELECT * FROM employees', function (err, result) {
         console.table(result);
-        init();
+
     })
 }
 
 
-module.exports = { viewRoles, viewEmployees, viewDepartments }
+// module.exports = { viewRoles, viewEmployees, viewDepartments }
