@@ -1,10 +1,10 @@
 ## SITE
 
-[Recording]()
+[Recording](https://drive.google.com/file/d/1KPqZRFuwmp-K8fEHT7JEBAsnfTi2x9tS/view)
 
 ## Example
 
-![pic](./public/assets/Screenshot%202023-04-27%20at%204.59.49%20PM.png)
+![pic](./db/Screenshot%202023-05-04%20at%2010.14.26%20AM.png)
 
 ## Description
 
@@ -28,18 +28,15 @@ This project enables the user to manage employee data with the command line. The
 
 ## Code Example
 
-This is a snippet of code using Express to retrieve parsed JSON data.
+This is a snippet of code showing part of one of the more complex function which updates the roles.
 
-```app.get('/api/notes', (req, res) => {
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-
-        } else {
-            const parseData = JSON.parse(data);
-            res.send(parseData);
-        }
-    })})
+```function updateRole() {
+    db.query('SELECT * from employees', function (err, res) {
+        let employees = [];
+        for (let i = 0; i < res.length; i++) {
+            employees.push('' + res[i].first_name + ' ' + res[i].last_name);
+            console.log(employees[i]);
+        }})}
 
 ```
 
